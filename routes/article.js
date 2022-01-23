@@ -2,6 +2,8 @@ const express = require('express');
 
 const Router = express.Router();
 
+const Article = require('../models/Article');
+
 const dataLiseMiddleware = (req,res,next)=>{
     res.data = (json)=>{
       res.json({
@@ -12,10 +14,21 @@ const dataLiseMiddleware = (req,res,next)=>{
 };
 
 
-Router.get('/',dataLiseMiddleware,(req,res)=>{
+Router.get('/',dataLiseMiddleware, async (req,res)=>{
     res.data({
-        version:'Loading ...'
+        list: await Article.allFormatted()
     });
+});
+
+Router.post('/',dataLiseMiddleware,async (req,res)=>{
+
+    const data = await Article.create(req.body);
+
+    return res.data({
+        data,
+        message:'Article created successfully'
+    });
+
 });
 
 module.exports = Router;
