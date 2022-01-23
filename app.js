@@ -4,7 +4,9 @@ const app = express();
 
 const mongoose = require('mongoose');
 
-const env = require('env');
+// const env = require('env');
+
+require('dotenv').config();
 
 
 
@@ -27,8 +29,9 @@ app.use('/articles',Router);
 // });
 
 //process.env.MONGO_CONNECTION_STRING
-mongoose.connect("mongodb+srv://akl-admin:september92014@cluster0.hk4x6.mongodb.net/test",()=>{
-    console.log('Connected To Db.');
+// console.log(process.env.MONGO_CONNECTION_STRING);
+mongoose.connect(process.env.MONGO_CONNECTION_STRING,()=>{
+    console.log('Connected To Db...');
 });
 
 
