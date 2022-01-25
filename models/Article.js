@@ -1,4 +1,7 @@
 const mongoose = require('mongoose');
+const { BaseModel, Collection } = require('./BaseModel');
+
+
 
 const ArticleSchema = mongoose.Schema({
     name:{
@@ -17,11 +20,11 @@ const ArticleSchema = mongoose.Schema({
 
 
 
-class Article{
+class Article extends BaseModel{
 
-    static all(){
-        return this.find({});
-    }
+    // static all(){
+    //     return this.find({});
+    // }
 
     toS(){
        return this.name + ' , ' + this.content;
@@ -29,6 +32,9 @@ class Article{
 
     static async allFormatted(){
        let list = await this.all();
+       console.log(list);
+    //    list = this.collect(list);
+    //    let count = 9; //list.count();
        return list.map((item)=>{
            let {name,content,date} = item;
            return {
