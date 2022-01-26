@@ -9,6 +9,22 @@ const mongoose = require('mongoose');
 
 require('dotenv').config();
 
+const pool = require('./db');
+
+
+app.get('/pg-init',async (req,res)=>{
+    try {
+        const newTodo = await pool.query("insert into todo (description) values ($1) returning *",['test-description...']);
+        res.json({
+            newRec:newTodo
+        });
+    } catch (error) {
+        res.json({
+            error
+        });
+    }
+});
+
 
 
 // console.log(env().MONGO_CONNECTION_STRING);
